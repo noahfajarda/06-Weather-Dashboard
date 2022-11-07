@@ -1,0 +1,16 @@
+.transbox {
+    height: 500px;
+    background-color: rgb(27, 86, 250, 0.3);
+    border-radius: 10px;
+}
+
+.transbox p {
+    color: black;
+    font-size: 25px;
+}
+
+body {
+    /* set background image */
+    background-image: url("");
+    background-size: 3000px 700px;
+}
