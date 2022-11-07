@@ -14,3 +14,7 @@ body {
     background-image: url("");
     background-size: 3000px 700px;
 }
+
+card {
+    background-color: rgba(250, 72, 27, 0.3);
+}

@@ -37,7 +37,7 @@
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
         />
-        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="./Assets/css/style.css" />
         <title>WEATHER APP 2</title>
     </head>
     <body>
@@ -103,24 +103,26 @@
             <section class="col-12 col-xxl-8 px-4 pb-4 row">
                 <container class="transbox p-5">
                     <!-- add d-none class to each container -->
-                    <container class="d-none" id="currentWeatherContainer">
-                        <h3 class="p-1" id="locationName"></h3>
-                        <h5 class="p-1">
-                            Temperature: <span id="temperature"></span>
-                        </h5>
-                        <h5 class="p-1">
-                            Humidity: <span id="humidity"></span>
-                        </h5>
-                        <h5 class="p-1">
-                            Wind-Speed: <span id="windSpeed"></span>
+                    <container class="d-none row text-center" id="currentWeatherContainer">
+                        <h1 class="p-1" id="locationName"></h1>
+                        <div>
+                            <h5 class="p-1">
+                                Temperature: <span id="temperature"></span>
+                            </h5>
+                            <h5 class="p-1">
+                                Humidity: <span id="humidity"></span>
+                            </h5>
+                            <h5 class="p-1">
+                                Wind-Speed: <span id="windSpeed"></span>
+                        </div>
                         </h5>
                     </container>
                     <container class="d-none" id="forecastWeatherContainer"
                         class="d-flex flex-column justify-content-around"
-                    >
-                        <div class="p-2 fs-2 rounded">5-day Forecast</div>
+                    ><hr>
+                        <div class="text-center p-2 fs-2 rounded">5-day Forecast</div>
                         <container class="d-flex flex-row flex-wrap justify-content-around">
-                            <div
+                            <card
                                 class="p-2 m-3 rounded border border-primary col-12 col-xxl-3"
                             >
                                 <h5 class="p-1"><span id="date0"></span></h5>
@@ -134,8 +136,8 @@
                                 <h5 class="p-1">
                                     Wind-Speed: <span id="windSpeed0"></span>
                                 </h5>
-                            </div>
-                            <div
+                            </card>
+                            <card
                                 class="p-2 m-3 rounded border border-primary col-12 col-xxl-3"
                             >
                                 <h5 class="p-1"><span id="date1"></span></h5>
@@ -149,8 +151,8 @@
                                 <h5 class="p-1">
                                     Wind-Speed: <span id="windSpeed1"></span>
                                 </h5>
-                            </div>
-                            <div
+                            </card>
+                            <card
                                 class="p-2 m-3 rounded border border-primary col-12 col-xxl-3"
                             >
                                 <h5 class="p-1"><span id="date2"></span></h5>
@@ -164,8 +166,8 @@
                                 <h5 class="p-1">
                                     Wind-Speed: <span id="windSpeed2"></span>
                                 </h5>
-                            </div>
-                            <div
+                            </card>
+                            <card
                                 class="p-2 m-3 rounded border border-primary col-12 col-xxl-3"
                             >
                                 <h5 class="p-1"><span id="date3"></span></h5>
@@ -179,8 +181,8 @@
                                 <h5 class="p-1">
                                     Wind-Speed: <span id="windSpeed3"></span>
                                 </h5>
-                            </div>
-                            <div
+                            </card>
+                            <card
                                 class="p-2 m-3 rounded border border-primary col-12 col-xxl-3"
                             >
                                 <h5 class="p-1"><span id="date4"></span></h5>
@@ -194,7 +196,7 @@
                                 <h5 class="p-1">
                                     Wind-Speed: <span id="windSpeed4"></span>
                                 </h5>
-                            </div>
+                            </card>
                     </container>
                 </container>
             </section>
@@ -212,5 +214,5 @@
         integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
         crossorigin="anonymous"
     ></script>
-    <script src="script.js"></script>
+    <script src="./Assets/js/script.js"></script>
 </html>
