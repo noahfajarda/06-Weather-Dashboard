@@ -65,8 +65,9 @@ function enableButton() {
 
 // get geo location from open weather map api
 function getGeoLocation(query, query2, limit = 7) {
+    console.log(API_KEY);
     return fetch(
-        `https://api.openweathermap.org/geo/1.0/direct?q=${query},${query2}&limit=${limit}&appid=${API_KEY}`
+        `https://api.openweathermap.org/geo/1.0/direct?q=${query},${query2}&limit=${limit}&appid=b80f4f4a76bd4c6a587f1efe91224ce5`
     );
 }
 
@@ -76,15 +77,66 @@ function getWeather(arguments) {
     );
 }
 
-function addCity() {
-    cityInput = capitalizeFirstLetter(qs("#cityInput").value);
-    stateInput = capitalizeFirstLetter(qs("#stateInput").value);
+function displayButtons() {
+    var previousCitiesButtonEl = $("#previousCityButtons");
+    previousCitiesButtonEl.html("");
+
+    var savedSearches = JSON.parse(localStorage.getItem("locations")) || [];
+    for (var i = 0; i < savedSearches.length; i++) {
+        var city = savedSearches[i].city;
+        var state = savedSearches[i].state;
+        console.log(savedSearches);
+        // create button
+        // add the city to search section
+        var newCityBtn = $("<button></button>");
+        // prettier-ignore
+        newCityBtn.addClass(["btn", "btn-secondary", "text-light", "p-3", "mb-2", "city"]);
+        newCityBtn.on("click", addCity);
+        newCityBtn.attr("data-city", city);
+        newCityBtn.attr("data-state", state);
+        newCityBtn.text(city + ", " + state);
+        previousCitiesButtonEl.append(newCityBtn);
+
+        // TODO: add 'history' text for buttons
+        var historyTextEl = $("<h2></h2>");
+        historyTextEl.text("History:");
+
+        // display the 2 forecast containers
+        $("#currentWeatherContainer").removeClass("d-none");
+        $("#forecastWeatherContainer").removeClass("d-none");
+    }
+}
+
+displayButtons();
+
+function saveLocal(city, state) {
+    var cityObj = {
+        city: city,
+        state: state,
+    };
+    var savedSearches = JSON.parse(localStorage.getItem("locations")) || [];
+    var savedCityNames = savedSearches.map((city) => city.name);
+    var savedStateNames = savedSearches.map((city) => city.state);
+    if (!savedCityNames.includes(city) && !savedStateNames.includes(state)) {
+        savedSearches.push(cityObj);
+        localStorage.setItem("locations", JSON.stringify(savedSearches));
+        displayButtons();
+    }
+}
+
+function addCity(e) {
+    console.log(e);
+    cityInput =
+        e.target.dataset.city || capitalizeFirstLetter(qs("#cityInput").value);
+    stateInput =
+        e.target.dataset.state ||
+        capitalizeFirstLetter(qs("#stateInput").value);
 
     getGeoLocation(cityInput, stateInput)
         .then((response) => response.json())
         .then((data) => {
-            // try to get lat & lon
-
+            saveLocal(cityInput, stateInput);
+            console.log(data);
             // error handling
             if (data.length == 0) {
                 // clear search bar
@@ -94,7 +146,6 @@ function addCity() {
                 enableButton();
                 qs("#clearHistory").disabled = false;
             }
-            console.log(data);
 
             // iterate through list of cities to see if the state matches
             var filteredCity;
@@ -156,19 +207,6 @@ function addCity() {
                             `<img src=https://openweathermap.org/img/wn/${forecastWeather[i].icon}.png>`
                         );
                     }
-
-                    // create button
-                    // add the city to search section
-                    var newCityBtn = $("<button></button>");
-                    var searchSectionEl = $("#searchSection");
-                    // prettier-ignore
-                    newCityBtn.addClass(["btn", "btn-secondary", "text-light", "p-3", "mb-2", "city"]);
-                    newCityBtn.text(cityInput + ", " + stateInput);
-                    searchSectionEl.append(newCityBtn);
-
-                    // display the 2 forecast containers
-                    $("#currentWeatherContainer").removeClass("d-none");
-                    $("#forecastWeatherContainer").removeClass("d-none");
                 });
         });
 }
