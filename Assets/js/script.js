@@ -126,11 +126,10 @@ function saveLocal(city, state) {
 
 function addCity(e) {
     console.log(e);
-    cityInput =
-        e.target.dataset.city || capitalizeFirstLetter(qs("#cityInput").value);
-    stateInput =
-        e.target.dataset.state ||
-        capitalizeFirstLetter(qs("#stateInput").value);
+    // prettier-ignore
+    cityInput = e.target.dataset.city || capitalizeFirstLetter(qs("#cityInput").value);
+    // prettier-ignore
+    stateInput = e.target.dataset.state || capitalizeFirstLetter(qs("#stateInput").value);
 
     getGeoLocation(cityInput, stateInput)
         .then((response) => response.json())
