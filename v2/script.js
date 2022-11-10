@@ -75,8 +75,8 @@ if (savedLocations.length !== 0) {
 
 function submitLocation() {
     // get values of user input
-    var city = $("#cityInput").val();
-    var state = $("#stateInput").val();
+    var city = capitalizeFirstLetter($("#cityInput").val());
+    var state = capitalizeFirstLetter($("#stateInput").val());
 
     // retrieve the city data
     retrieveCityWeatherData(city, state);
@@ -102,9 +102,7 @@ function submitLocation() {
 }
 
 function createLocationBtn(city, state) {
-    // capitalize first letter for city & state
-    city = capitalizeFirstLetter(city);
-    state = capitalizeFirstLetter(state);
+    // checking if state !== null
     if (state === "") {
         // prettier-ignore
         createEl("button", `${city}`, city.replaceAll(" ", ""), "", "#cityList");
@@ -131,12 +129,6 @@ function clearLocationBtns() {
     $("#currentWeatherContainer").addClass("d-none");
     $("#forecastWeatherContainer").addClass("d-none");
 }
-
-// TODO!!!!!
-// create containers for weather data
-// do them upon app refresh regardless of if data is populated
-// purpose: just for containers, but created dynamically
-// createEl("button", `testing`, "test", "", "#dataContainer");
 
 console.log("MR. TELEPHONE MAN");
 
@@ -185,7 +177,7 @@ function retrieveCityWeatherData(city, state) {
                         forecastWeather
                     );
 
-                    displayData(currentWeather, forecastWeather);
+                    displayData(currentWeather, forecastWeather, city, state);
                 });
         });
 }
@@ -235,7 +227,7 @@ function getForecast(data) {
 }
 
 // displays data to the UI
-function displayData(currentWeather, forecastWeather) {
+function displayData(currentWeather, forecastWeather, city, state) {
     // format and display containers
     $("#dataContainer").css("height", "fit-content");
     $("#currentWeatherContainer").removeClass("d-none");
@@ -243,9 +235,21 @@ function displayData(currentWeather, forecastWeather) {
     console.log("maybe");
 
     // display current weather
+    $("#locationName").text(city + ", " + state);
     $("#temperature").text(currentWeather.Temperature + "°F");
     $("#humidity").text(currentWeather.Humidity + "%");
     $("#windSpeed").text(currentWeather["Wind Speed"] + " mph");
+
+    // display 5-day forecast (date, icon, temp, humidity, & windspeed)
+    for (var i = 0; i < 5; i++) {
+        $("#date" + i).text(forecastWeather[i].date);
+        $("#icon" + i).html(
+            `<img src=https://openweathermap.org/img/wn/${forecastWeather[i].icon}.png>`
+        );
+        $("#temperature" + i).text(forecastWeather[i].temperature + "°F");
+        $("#humidity" + i).text(forecastWeather[i].humidity + "%");
+        $("#windSpeed" + i).text(forecastWeather[i].wind_speed + " mph");
+    }
 }
 
 // DATA FROM API
