@@ -5,3 +5,18 @@ h1 {
 #clearBtn {
     display: none;
 }
+
+#dataContainer {
+    height: 600px;
+    background-color: rgb(27, 86, 250, 0.3);
+    border-radius: 20px;
+}
+
+#dataContainer p {
+    color: black;
+    font-size: 25px;
+}
+
+card {
+    background-color: rgba(250, 72, 27, 0.3);
+}

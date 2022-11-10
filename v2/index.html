@@ -39,19 +39,124 @@
             <p id="currentTime" class="lead mb-0 text-center"></p>
         </header>
 
-        <main class="p-5 d-flex flex-row flex-wrap justify-content-center">
+        <main
+            class="p-5 d-flex flex-row flex-wrap justify-content-center align-items-start"
+        >
             <!-- search section -->
             <!-- prettier-ignore -->
-            <section class="col-12 col-xl-4 row d-flex flex-row flex-wrap justify-content-around" id="searchSection">
+            <section class="col-12 col-xl-4 row p-4 d-flex flex-row flex-wrap justify-content-around" id="searchSection">
+                <h6>City:</h6>
                 <input class="class1 class2" id="cityInput">
                 <hr>
+                <h6>State:</h6>
                 <input class="class1 class2" id="stateInput">
                 <button class="class1 class2" id="submitLocation"><h2>submit</h2></button>
+                <hr>
                 <button class="class1 class2" id="clearBtn">Clear</button>
                 <section id="cityList"></section>
             </section>
             <!-- display section -->
-            <section class="col-12 col-xl-8"></section>
+            <section class="col-12 col-xxl-8 px-4 pb-4 row">
+                <container id="dataContainer" class="p-5">
+                    <!-- add d-none class to each container -->
+                    <container class="row text-center d-none" id="currentWeatherContainer">
+                        <h1 class="p-1" id="locationName"></h1>
+                        <div>
+                            <h5 class="p-1">
+                                Temperature: <span id="temperature"></span>
+                            </h5>
+                            <h5 class="p-1">
+                                Humidity: <span id="humidity"></span>
+                            </h5>
+                            <h5 class="p-1">
+                                Wind-Speed: <span id="windSpeed"></span>
+                        </div>
+                        </h5>
+                    </container>
+                    <!-- add d-none class to each container -->
+                    <container id="forecastWeatherContainer"
+                        class="d-flex flex-column justify-content-around d-none"
+                    ><hr>
+                        <div class="text-center p-2 fs-2 rounded">5-day Forecast</div>
+                        <container class="d-flex flex-row flex-wrap justify-content-around">
+                            <card
+                                class="p-2 m-3 rounded border border-primary col-12 col-xxl-3"
+                            >
+                                <h5 class="p-1"><span id="date0"></span></h5>
+                                <h5 class="p-1"><span id="icon0"></span></h5>
+                                <h5 class="p-1">
+                                    Temperature: <span id="temperature0"></span>
+                                </h5>
+                                <h5 class="p-1">
+                                    Humidity: <span id="humidity0"></span>
+                                </h5>
+                                <h5 class="p-1">
+                                    Wind-Speed: <span id="windSpeed0"></span>
+                                </h5>
+                            </card>
+                            <card
+                                class="p-2 m-3 rounded border border-primary col-12 col-xxl-3"
+                            >
+                                <h5 class="p-1"><span id="date1"></span></h5>
+                                <h5 class="p-1"><span id="icon1"></span></h5>
+                                <h5 class="p-1">
+                                    Temperature: <span id="temperature1"></span>
+                                </h5>
+                                <h5 class="p-1">
+                                    Humidity: <span id="humidity1"></span>
+                                </h5>
+                                <h5 class="p-1">
+                                    Wind-Speed: <span id="windSpeed1"></span>
+                                </h5>
+                            </card>
+                            <card
+                                class="p-2 m-3 rounded border border-primary col-12 col-xxl-3"
+                            >
+                                <h5 class="p-1"><span id="date2"></span></h5>
+                                <h5 class="p-1"><span id="icon2"></span></h5>
+                                <h5 class="p-1">
+                                    Temperature: <span id="temperature2"></span>
+                                </h5>
+                                <h5 class="p-1">
+                                    Humidity: <span id="humidity2"></span>
+                                </h5>
+                                <h5 class="p-1">
+                                    Wind-Speed: <span id="windSpeed2"></span>
+                                </h5>
+                            </card>
+                            <card
+                                class="p-2 m-3 rounded border border-primary col-12 col-xxl-3"
+                            >
+                                <h5 class="p-1"><span id="date3"></span></h5>
+                                <h5 class="p-1"><span id="icon3"></span></h5>
+                                <h5 class="p-1">
+                                    Temperature: <span id="temperature3"></span>
+                                </h5>
+                                <h5 class="p-1">
+                                    Humidity: <span id="humidity3"></span>
+                                </h5>
+                                <h5 class="p-1">
+                                    Wind-Speed: <span id="windSpeed3"></span>
+                                </h5>
+                            </card>
+                            <card
+                                class="p-2 m-3 rounded border border-primary col-12 col-xxl-3"
+                            >
+                                <h5 class="p-1"><span id="date4"></span></h5>
+                                <h5 class="p-1"><span id="icon4"></span></h5>
+                                <h5 class="p-1">
+                                    Temperature: <span id="temperature4"></span>
+                                </h5>
+                                <h5 class="p-1">
+                                    Humidity: <span id="humidity4"></span>
+                                </h5>
+                                <h5 class="p-1">
+                                    Wind-Speed: <span id="windSpeed4"></span>
+                                </h5>
+                            </card>
+                    </container>
+                </container>
+            </section>
         </main>
 
         <!-- jquery & moment -->
