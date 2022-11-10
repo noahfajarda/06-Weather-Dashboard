@@ -73,6 +73,7 @@ if (savedLocations.length !== 0) {
     }
 }
 
+// when user presses submit button
 function submitLocation() {
     // get values of user input
     var city = capitalizeFirstLetter($("#cityInput").val());
@@ -95,10 +96,9 @@ function submitLocation() {
     localStorage.setItem("SavedLocations", JSON.stringify(savedLocations));
 
     // create button with city & state & show clear Btn
+
     createLocationBtn(city, state);
     $("#clearBtn").css({ display: "block" });
-
-    // display city data
 }
 
 function createLocationBtn(city, state) {
@@ -113,6 +113,8 @@ function createLocationBtn(city, state) {
     }
 
     $("#" + city.replaceAll(" ", "")).on("click", function () {
+        $("#cityInput").val(city);
+        $("#stateInput").val(state);
         retrieveCityWeatherData(city, state);
     });
 }
@@ -150,10 +152,6 @@ console.log("MR. TELEPHONE MAN");
 function retrieveCityWeatherData(city, state) {
     console.log("-------------");
 
-    // TODO: get weather data for 'city' on click event
-    // CHANGE LATER
-    // city = "Newark";
-    // state = "California";
     getGeoLocation(city, state)
         .then((res) => res.json())
         .then((data) => {
@@ -177,9 +175,43 @@ function retrieveCityWeatherData(city, state) {
                         forecastWeather
                     );
 
-                    displayData(currentWeather, forecastWeather, city, state);
+                    // prettier-ignore
+                    displayData(currentWeather, forecastWeather, filteredCity.name, filteredCity.state);
                 });
+        })
+        // error handling
+        .catch((error) => {
+            console.error("There was an error!", error);
+            invalidUserInput();
+            $("#" + city.replaceAll(" ", "")).remove();
+            // reset text box values
+            $("#cityInput").val("");
+            $("#stateInput").val("");
+            savedLocations.pop();
+            // reassign local storage
+            localStorage.setItem(
+                "SavedLocations",
+                JSON.stringify(savedLocations)
+            );
+            // remove clear btn if there's nothing in the city list
+            if ($("#cityList button").length === 0) {
+                $("#clearBtn").css("display", "none");
+            }
         });
+}
+
+// user input error handling
+function invalidUserInput() {
+    var timeLeft = 2;
+    $("#stateError").addClass("d-block").removeClass("d-none");
+    var timeInterval = setInterval(function () {
+        timeLeft--;
+        if (timeLeft === -1) {
+            clearInterval(timeInterval);
+            $("#stateError").addClass("d-none").removeClass("d-block");
+        }
+        return;
+    }, 1000);
 }
 
 // filters for the city within the specified state
@@ -232,10 +264,13 @@ function displayData(currentWeather, forecastWeather, city, state) {
     $("#dataContainer").css("height", "fit-content");
     $("#currentWeatherContainer").removeClass("d-none");
     $("#forecastWeatherContainer").removeClass("d-none");
-    console.log("maybe");
 
     // display current weather
-    $("#locationName").text(city + ", " + state);
+    if (state === "") {
+        $("#locationName").text(city);
+    } else {
+        $("#locationName").text(city + ", " + state);
+    }
     $("#temperature").text(currentWeather.Temperature + "°F");
     $("#humidity").text(currentWeather.Humidity + "%");
     $("#windSpeed").text(currentWeather["Wind Speed"] + " mph");
