@@ -90,6 +90,15 @@ function submitLocation() {
         state: state,
     };
 
+    console.log(savedLocations);
+    for (var i = 0; i < savedLocations.length; i++) {
+        if (
+            savedLocations[i]["city"] == city &&
+            savedLocations[i]["state"] == state
+        ) {
+            return;
+        }
+    }
     // add to array & set local storage to array
     savedLocations.push(locationObj);
     console.log("Saved locations:", savedLocations);
