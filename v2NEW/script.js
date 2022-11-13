@@ -1,6 +1,13 @@
 // utility functions
 // dynamically create and append elements to specific parents (also accepts ids & classes)
-function createEl(element, innerHTML, id = "", classes = "", parent = "") {
+function createEl(
+    element,
+    innerHTML,
+    id = "",
+    classes = "",
+    parent = "",
+    prepend = ""
+) {
     var element = document.createElement(element);
     element.innerHTML = innerHTML;
     // add classes
@@ -22,9 +29,17 @@ function createEl(element, innerHTML, id = "", classes = "", parent = "") {
     // parent
     // console.log(parent);
     if (parent !== "") {
-        $(parent).append(element);
+        if (prepend == "prepend") {
+            $(parent).prepend(element);
+        } else {
+            $(parent).append(element);
+        }
     } else {
-        document.body.appendChild(element);
+        if (prepend == "prepend") {
+            document.body.appendChild(element);
+        } else {
+            document.body.appendChild(element);
+        }
     }
 }
 
@@ -118,7 +133,7 @@ function createLocationBtn(city, state) {
     } else {
         // repplace all function === removes spaces when creating btn ID
         // prettier-ignore
-        createEl("button", `${city}, ${state}`, city.replaceAll(" ", ""), "", "#cityList");
+        createEl("button", `${city}, ${state}`, city.replaceAll(" ", ""), ["btn", "btn-secondary", "text-light", "p-3", "mb-2", "city"], "#cityList", "prepend");
     }
 
     $("#" + city.replaceAll(" ", "")).on("click", function () {
@@ -267,6 +282,18 @@ function getForecast(data) {
     return forecastWeather;
 }
 
+// all states variable
+// prettier-ignore
+var availableStates = [ "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"];
+
+// ask about in OH
+// autocomplete for entering US state
+// $(function () {
+//     $("#stateInput").autocomplete({
+//         source: availableStates,
+//     });
+// });
+
 // displays data to the UI
 function displayData(currentWeather, forecastWeather, city, state) {
     // format and display containers
@@ -293,6 +320,16 @@ function displayData(currentWeather, forecastWeather, city, state) {
         $("#temperature" + i).text(forecastWeather[i].temperature + "°F");
         $("#humidity" + i).text(forecastWeather[i].humidity + "%");
         $("#windSpeed" + i).text(forecastWeather[i].wind_speed + " mph");
+    }
+}
+
+// buttons will only enable if text is inputted in both fields
+console.log($("#cityInput").val());
+function enableButton() {
+    if ($("#cityInput").val() === "" || $("#stateInput").val() === "") {
+        $("#submitLocation").prop("disabled", true);
+    } else {
+        $("#submitLocation").prop("disabled", false);
     }
 }
 

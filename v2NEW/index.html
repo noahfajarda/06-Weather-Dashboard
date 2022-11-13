@@ -21,6 +21,23 @@
             href="https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap"
             rel="stylesheet"
         />
+        <!-- jquery 3.6.1 -->
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+            integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+        <!-- jquery UI 1.13.1 -->
+        <script
+            src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"
+            integrity="sha256-6XMVI0zB8cRzfZjqKcD01PBsAy3FlDASrlC8SxCpInY="
+            crossorigin="anonymous"
+        ></script>
+        <link
+            rel="stylesheet"
+            href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css"
+        />
         <!-- bootstrap -->
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
@@ -44,17 +61,29 @@
         >
             <!-- search section -->
             <!-- prettier-ignore -->
-            <section class="col-12 col-xl-4 row p-4 d-flex flex-row flex-wrap justify-content-around" id="searchSection">
-                <h6>City:</h6>
-                <input class="class1 class2" id="cityInput">
+            <section class="col-12 col-xl-4 row p-4 pt-0 d-flex flex-row flex-wrap justify-content-around" id="searchSection">
+                <div>
+                    <em id="stateError" class="text-danger d-none">There was an error retrieving weather data. Please
+                        check your entry for possible misspellings.</em>
+                </div>
+                <h2 class="pb-1 px-0">Enter a City:</h2>
+                <input class="form-control fs-4 mb-4" placeholder="Los Angeles" id="cityInput" value="" onkeyup="enableButton()">
+                <h2 class="pb-1 px-0">Enter a State:</h2>
+                <input class="form-control fs-4 mb-4" placeholder="California" id="stateInput" value="" onkeyup="enableButton()">
+                <!-- add disabled & enable it when text is entered in both (FIND THAT IN THE V1 CODE) -->
+                <button type="submit" id="submitLocation" class="btn btn-info btn-lg text-dark"><h2>Search</h2></button>
+                <!-- add disabled & enable it when text is entered in both (FIND THAT IN THE V1 CODE) -->
+                <button type="button" class="btn btn-primary" id="clearBtn">Clear</button>
                 <hr>
-                <h6>State:</h6>
-                <input class="class1 class2" id="stateInput">
-                <button class="class1 class2" id="submitLocation"><h2>submit</h2></button>
-                <hr>
-                <button class="class1 class2" id="clearBtn">Clear</button>
                 <section id="cityList"></section>
             </section>
+
+
+
+
+
+
+
             <!-- display section -->
             <section class="col-12 col-xxl-8 px-4 pb-4 row">
                 <container id="dataContainer" class="p-5">
@@ -158,6 +187,14 @@
                 </container>
             </section>
         </main>
+
+            <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!-- jQuery UI -->
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <!-- moment.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <!-- bootstrap.js -->
 
         <!-- jquery & moment -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

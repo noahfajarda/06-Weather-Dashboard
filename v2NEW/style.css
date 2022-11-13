@@ -20,6 +20,10 @@ h1 {
 card {
     background-color: rgba(250, 72, 27, 0.3);
 }
+.city {
+    display: block;
+    width: 100%;
+}
 
 /* #cityList button {
     display: block;
