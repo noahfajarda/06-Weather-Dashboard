@@ -70,6 +70,16 @@ function createRunningDT() {
 }
 createRunningDT();
 
+// all states variable
+// prettier-ignore
+var availableStates = [ "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"];
+// autocomplete for entering US state
+$(function () {
+    $("#stateInput").autocomplete({
+        source: availableStates,
+    });
+});
+
 // event listeners for submit & clear
 $("#submitLocation").on("click", submitLocation);
 $("#clearBtn").on("click", clearLocationBtns);
@@ -123,6 +133,8 @@ function submitLocation() {
 
     createLocationBtn(city, state);
     $("#clearBtn").css({ display: "block" });
+    $("#cityInput").val("");
+    $("#stateInput").val("");
 }
 
 function createLocationBtn(city, state) {
@@ -331,6 +343,10 @@ function enableButton() {
     } else {
         $("#submitLocation").prop("disabled", false);
     }
+}
+
+if ($("#cityInput").val() === "" || $("#stateInput").val() === "") {
+    $("#submitLocation").prop("disabled", true);
 }
 
 // DATA FROM API

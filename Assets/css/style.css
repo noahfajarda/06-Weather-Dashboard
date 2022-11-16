@@ -4,6 +4,7 @@ h1 {
 
 #clearBtn {
     display: none;
+    margin-top: 10px;
 }
 
 #dataContainer {
