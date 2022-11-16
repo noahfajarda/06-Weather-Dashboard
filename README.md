@@ -1,4 +1,4 @@
-# 05-work-day-scheduler
+# 06-Weather-Dashboard
 
 ## Description
 
@@ -6,8 +6,8 @@ This project is an attempt to create a weather dashboard that can display the cu
 
 ## Screenshot
 
-![App Screenshot](https://github.com/noahfajarda/05-work-day-scheduler/blob/main/assets/screenshots/Screenshot%202022-10-31%20at%2011.19.17%20PM.png)
-![App Screenshot](https://github.com/noahfajarda/05-work-day-scheduler/blob/main/assets/screenshots/Screenshot%202022-10-31%20at%2011.20.17%20PM.png)
+![App Screenshot](https://github.com/noahfajarda/06-Weather-Dashboard/blob/main/Assets/screenshots/screenshot-1.png)
+![App Screenshot](https://github.com/noahfajarda/06-Weather-Dashboard/blob/main/Assets/screenshots/screenshot-2.png)
 
 ## Link to Deployed Application
 
