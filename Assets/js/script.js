@@ -1,13 +1,7 @@
 // utility functions
 // dynamically create and append elements to specific parents (also accepts ids & classes)
-function createEl(
-    element,
-    innerHTML,
-    id = "",
-    classes = "",
-    parent = "",
-    prepend = ""
-) {
+// prettier-ignore
+function createEl(element, innerHTML, id = "", classes = "", parent = "", prepend = "") {
     var element = document.createElement(element);
     element.innerHTML = innerHTML;
     // add classes
@@ -115,7 +109,6 @@ function submitLocation() {
         state: state,
     };
 
-    console.log(savedLocations);
     for (var i = 0; i < savedLocations.length; i++) {
         if (
             savedLocations[i]["city"] == city &&
@@ -126,17 +119,19 @@ function submitLocation() {
     }
     // add to array & set local storage to array
     savedLocations.push(locationObj);
-    console.log("Saved locations:", savedLocations);
     localStorage.setItem("SavedLocations", JSON.stringify(savedLocations));
 
-    // create button with city & state & show clear Btn
-
+    // create button with city & state, show clear Btn, & clear search section
     createLocationBtn(city, state);
     $("#clearBtn").css({ display: "block" });
     $("#cityInput").val("");
     $("#stateInput").val("");
+
+    // clear input text & disable button
+    enableButton();
 }
 
+// create button to be displayed in search section
 function createLocationBtn(city, state) {
     // checking if state !== null
     if (state === "") {
@@ -168,26 +163,8 @@ function clearLocationBtns() {
     $("#forecastWeatherContainer").addClass("d-none");
 }
 
-console.log("MR. TELEPHONE MAN");
-
-// CALLING DATA FROM API
-// CALLING DATA FROM API
-// CALLING DATA FROM API
-// CALLING DATA FROM API
-// CALLING DATA FROM API
-// CALLING DATA FROM API
-// CALLING DATA FROM API
-// CALLING DATA FROM API
-// CALLING DATA FROM API
-// CALLING DATA FROM API
-// CALLING DATA FROM API
-// CALLING DATA FROM API
-// CALLING DATA FROM API
-// CALLING DATA FROM API
-
+// get necessary data from API & store in data structure
 function retrieveCityWeatherData(city, state) {
-    console.log("-------------");
-
     getGeoLocation(city, state)
         .then((res) => res.json())
         .then((data) => {
@@ -199,17 +176,10 @@ function retrieveCityWeatherData(city, state) {
             getWeather(filteredCity)
                 .then((response) => response.json())
                 .then((data) => {
+                    console.log(data);
                     // retrieves CURRENT and FORECAST weather data
                     var currentWeather = getCurrent(data);
                     var forecastWeather = getForecast(data);
-                    console.log(
-                        `Current Weather for ${city}, ${state}:`,
-                        currentWeather
-                    );
-                    console.log(
-                        `Forecasted Weather for ${city}, ${state}:`,
-                        forecastWeather
-                    );
 
                     // prettier-ignore
                     displayData(currentWeather, forecastWeather, filteredCity.name, filteredCity.state);
@@ -252,7 +222,6 @@ function invalidUserInput() {
 
 // filters for the city within the specified state
 function filterState(data, city, state) {
-    console.log(data);
     // iterate through list of cities to see if the state matches
     var filteredCity;
     for (var i = 0; i < data.length; i++) {
@@ -274,6 +243,8 @@ function getCurrent(data) {
         Temperature: data.current.temp,
         Humidity: data.current.humidity,
         "Wind Speed": data.current.wind_speed,
+        icon: data.current.weather[0].icon,
+        description: data.current.weather[0].description,
     };
     return currentWeather;
 }
@@ -285,26 +256,15 @@ function getForecast(data) {
     for (var i = 1; i < 6; i++) {
         forecastWeather.push({
             date: new Date(data.daily[i].dt * 1000).toLocaleDateString(),
-            icon: data.daily[i].weather[0].icon,
             temperature: data.daily[i].temp.day,
             humidity: data.daily[i].humidity,
             wind_speed: data.daily[i].wind_speed,
+            icon: data.daily[i].weather[0].icon,
+            description: data.daily[i].weather[0].description,
         });
     }
     return forecastWeather;
 }
-
-// all states variable
-// prettier-ignore
-var availableStates = [ "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"];
-
-// ask about in OH
-// autocomplete for entering US state
-// $(function () {
-//     $("#stateInput").autocomplete({
-//         source: availableStates,
-//     });
-// });
 
 // displays data to the UI
 function displayData(currentWeather, forecastWeather, city, state) {
@@ -322,12 +282,23 @@ function displayData(currentWeather, forecastWeather, city, state) {
     $("#temperature").text(currentWeather.Temperature + "°F");
     $("#humidity").text(currentWeather.Humidity + "%");
     $("#windSpeed").text(currentWeather["Wind Speed"] + " mph");
+    $("#iconMain").html(
+        `<em>${capitalizeFirstLetter(
+            currentWeather.description
+        )}</em> <img src=https://openweathermap.org/img/wn/${
+            currentWeather.icon
+        }.png>`
+    );
 
     // display 5-day forecast (date, icon, temp, humidity, & windspeed)
     for (var i = 0; i < 5; i++) {
         $("#date" + i).text(forecastWeather[i].date);
         $("#icon" + i).html(
-            `<img src=https://openweathermap.org/img/wn/${forecastWeather[i].icon}.png>`
+            `<em>${capitalizeFirstLetter(
+                forecastWeather[i].description
+            )}</em> <img src=https://openweathermap.org/img/wn/${
+                forecastWeather[i].icon
+            }.png>`
         );
         $("#temperature" + i).text(forecastWeather[i].temperature + "°F");
         $("#humidity" + i).text(forecastWeather[i].humidity + "%");
@@ -336,7 +307,6 @@ function displayData(currentWeather, forecastWeather, city, state) {
 }
 
 // buttons will only enable if text is inputted in both fields
-console.log($("#cityInput").val());
 function enableButton() {
     if ($("#cityInput").val() === "" || $("#stateInput").val() === "") {
         $("#submitLocation").prop("disabled", true);
@@ -350,13 +320,6 @@ if ($("#cityInput").val() === "" || $("#stateInput").val() === "") {
 }
 
 // DATA FROM API
-// DATA FROM API
-// DATA FROM API
-// DATA FROM API
-// DATA FROM API
-// DATA FROM API
-// DATA FROM API
-
 // get geo location from open weather map api
 function getGeoLocation(query, query2, limit = 7) {
     return fetch(
